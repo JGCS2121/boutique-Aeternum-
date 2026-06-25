@@ -18,18 +18,18 @@ jobs:
         node-version: '18'
         cache: 'npm'
 
+    - name: Install dependencies
+      run: npm install
+
+    - name: Generate Android Project (Expo Prebuild)
+      run: npx expo prebuild --platform android --no-install
+
     - name: Setup Java
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
         java-version: '17'
         cache: 'gradle'
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Generate Android Project (Expo Prebuild)
-      run: npx expo prebuild --platform android --no-install
 
     - name: Make gradlew executable
       run: chmod +x ./android/gradlew
