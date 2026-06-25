@@ -15,7 +15,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
         cache: 'npm'
 
     - name: Install dependencies
@@ -35,9 +35,11 @@ jobs:
       run: chmod +x ./android/gradlew
 
     - name: Build APK and AAB
+      env:
+        NODE_OPTIONS: "--max-old-space-size=4096"
       run: |
         cd android
-        ./gradlew assembleRelease bundleRelease
+        ./gradlew assembleRelease bundleRelease --info
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
