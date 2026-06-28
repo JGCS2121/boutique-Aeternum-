@@ -2,6 +2,7 @@
   "expo": {
     "name": "Aeternum",
     "slug": "aeternum",
+    "scheme": "aeternum",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,23 +21,31 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "versionCode": 1,
       "edgeToEdgeEnabled": true,
-      "package": "com.aeternum.app"
+      "package": "com.aeternum.app",
+      "googleServicesFile": "./google-services.json",
+      "permissions": [
+        "RECEIVE_BOOT_COMPLETED",
+        "VIBRATE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "extra": {
-      "eas": {
-        "projectId": "ae917161-ae26-497a-bb2d-162392cdf84e"
-      }
-    },
-    "owner": "josecs",
     "runtimeVersion": {
       "policy": "appVersion"
     },
     "updates": {
       "url": "https://u.expo.dev/ae917161-ae26-497a-bb2d-162392cdf84e"
+    },
+    "plugins": [
+      "expo-web-browser"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "61872d23-fac3-46cc-958f-3b8d996a63e5"
+      }
     }
   }
 }
