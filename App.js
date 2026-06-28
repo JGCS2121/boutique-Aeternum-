@@ -192,6 +192,17 @@ function WebViewScreen({ route }) {
           });
         }, 600);
       }
+
+      // Add redirect_to field to all forms pointing to wp-login.php
+      document.querySelectorAll('form[action*="wp-login.php"]').forEach(form => {
+        if (!form.querySelector('input[name="redirect_to"]')) {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = 'redirect_to';
+          input.value = 'https://aeternum.com.co/my-account/';
+          form.appendChild(input);
+        }
+      });
     })();
     true;
   `;
@@ -229,6 +240,11 @@ function WebViewScreen({ route }) {
             // Redirect home after logout
             if (s.url.includes('wp-login.php?loggedout=true')) {
               navigation.navigate('Inicio', { url: BASE_URL });
+            }
+
+            // Evitar que el usuario vea el panel de control de WordPress al iniciar sesión
+            if (s.url.includes('wp-admin') && !s.url.includes('admin-ajax.php')) {
+              navigation.navigate('Mi Cuenta', { url: `${BASE_URL}my-account/` });
             }
           }}
           injectedJavaScript={autoScrollScript}
