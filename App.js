@@ -226,8 +226,8 @@ function WebViewScreen({ route }) {
             setCanGoBack(s.canGoBack);
             setCurrentUrl(s.url);
             
-            // Redirect home after logout or if hitting wp-login directly to avoid sticking
-            if (s.url.includes('wp-login.php?loggedout=true') || (s.url.includes('wp-login.php') && !s.url.includes('action=logout'))) {
+            // Redirect home after logout
+            if (s.url.includes('wp-login.php?loggedout=true')) {
               navigation.navigate('Inicio', { url: BASE_URL });
             }
           }}
