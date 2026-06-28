@@ -39,6 +39,13 @@ jobs:
     - name: Make gradlew executable
       run: chmod +x ./android/gradlew
 
+    - name: Prevent Gradle Hanging (Memory Fix)
+      run: |
+        mkdir -p ~/.gradle
+        echo "org.gradle.jvmargs=-Xmx3072m -XX:MaxMetaspaceSize=1024m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" >> ~/.gradle/gradle.properties
+        echo "org.gradle.parallel=true" >> ~/.gradle/gradle.properties
+        echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
+
     - name: Build APK and AAB
       env:
         NODE_OPTIONS: "--max-old-space-size=4096"
