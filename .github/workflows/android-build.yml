@@ -47,14 +47,38 @@ jobs:
         cd android
         ./gradlew assembleRelease bundleRelease --no-daemon --info
 
-    - name: Upload APK
+    - name: Sign APK
+      uses: r0adkll/sign-android-release@v1
+      id: sign_apk
+      with:
+        releaseDirectory: android/app/build/outputs/apk/release
+        signingKeyBase64: ${{ secrets.SIGNING_KEY_STORE_BASE64 }}
+        alias: ${{ secrets.SIGNING_KEY_ALIAS }}
+        keyStorePassword: ${{ secrets.SIGNING_STORE_PASSWORD }}
+        keyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
+      env:
+        BUILD_TOOLS_VERSION: "34.0.0"
+
+    - name: Sign AAB
+      uses: r0adkll/sign-android-release@v1
+      id: sign_aab
+      with:
+        releaseDirectory: android/app/build/outputs/bundle/release
+        signingKeyBase64: ${{ secrets.SIGNING_KEY_STORE_BASE64 }}
+        alias: ${{ secrets.SIGNING_KEY_ALIAS }}
+        keyStorePassword: ${{ secrets.SIGNING_STORE_PASSWORD }}
+        keyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
+      env:
+        BUILD_TOOLS_VERSION: "34.0.0"
+
+    - name: Upload Signed APK
       uses: actions/upload-artifact@v4
       with:
         name: app-release-apk
-        path: android/app/build/outputs/apk/release/app-release.apk
+        path: ${{steps.sign_apk.outputs.signedReleaseFile}}
 
-    - name: Upload AAB
+    - name: Upload Signed AAB
       uses: actions/upload-artifact@v4
       with:
         name: app-release-aab
-        path: android/app/build/outputs/bundle/release/app-release.aab
+        path: ${{steps.sign_aab.outputs.signedReleaseFile}}
