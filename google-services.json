@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "388655446076",
+    "project_id": "aeternum-app-89b31",
+    "storage_bucket": "aeternum-app-89b31.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:388655446076:android:d575580ad9a5b06a382b39",
+        "android_client_info": {
+          "package_name": "com.aeternum.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCntLMusOEZZglIRc020Y6TZ1e6Egz9dug"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
