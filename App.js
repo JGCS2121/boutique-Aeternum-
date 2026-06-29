@@ -193,23 +193,25 @@ function WebViewScreen({ route }) {
         }, 600);
       }
 
-      // Injects redirect_to into any wp-login form, including dynamically added ones
-      function injectRedirect(form) {
-        if (!form.querySelector('input[name="redirect_to"]')) {
-          const input = document.createElement('input');
+      // Forzar redirect_to correcto en cualquier formulario de login (aunque ya tenga uno)
+      function forceRedirect(form) {
+        let input = form.querySelector('input[name="redirect_to"]');
+        if (!input) {
+          input = document.createElement('input');
           input.type = 'hidden';
           input.name = 'redirect_to';
-          input.value = 'https://aeternum.com.co/my-account/';
           form.appendChild(input);
         }
+        // Siempre forzar, aunque ya exista un valor previo
+        input.value = 'https://aeternum.com.co/my-account/';
       }
 
-      // Check forms already in the DOM
-      document.querySelectorAll('form[action*="wp-login.php"], form[id="loginform"], form[name="loginform"]').forEach(injectRedirect);
+      // Aplicar a formularios ya en el DOM
+      document.querySelectorAll('form[action*="wp-login.php"], form[id="loginform"], form[name="loginform"]').forEach(forceRedirect);
 
-      // Watch for any forms added later by JS (custom login sheets etc.)
+      // Vigilar formularios añadidos dinámicamente por JS
       const observer = new MutationObserver(() => {
-        document.querySelectorAll('form[action*="wp-login.php"], form[id="loginform"], form[name="loginform"]').forEach(injectRedirect);
+        document.querySelectorAll('form[action*="wp-login.php"], form[id="loginform"], form[name="loginform"]').forEach(forceRedirect);
       });
       observer.observe(document.body, { childList: true, subtree: true });
     })();
@@ -264,7 +266,7 @@ function WebViewScreen({ route }) {
               navigation.navigate('Mi Cuenta', { url: `${BASE_URL}my-account/?login_error=1` });
             }
           }}
-          injectedJavaScript={autoScrollScript}
+          injectedJavaScriptBeforeContentLoaded={autoScrollScript}
           javaScriptEnabled={true}
           domStorageEnabled={true}
           sharedCookiesEnabled={true}
