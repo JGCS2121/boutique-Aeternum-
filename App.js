@@ -89,7 +89,7 @@ function CustomDrawerContent(props) {
           style={styles.drawerItem}
           onPress={() => {
             props.navigation.closeDrawer();
-            navigation.navigate('Mi Cuenta', { url: `${BASE_URL}my-account/` });
+            navigation.navigate('Mi Cuenta', { url: `${BASE_URL}mi-cuenta/` });
           }}
         >
           <Ionicons name="person-outline" size={20} color="#000000" style={{ width: 30 }} />
@@ -100,7 +100,7 @@ function CustomDrawerContent(props) {
           style={styles.drawerItem}
           onPress={() => {
             props.navigation.closeDrawer();
-            navigation.navigate('Inicio', { url: `${BASE_URL}my-account/customer-logout/` });
+            navigation.navigate('Inicio', { url: `${BASE_URL}mi-cuenta/customer-logout/` });
           }}
         >
           <Ionicons name="log-out-outline" size={20} color="#FF3B30" style={{ width: 30 }} />
@@ -150,7 +150,7 @@ function WebViewScreen({ route }) {
 
   useEffect(() => {
     const unsubscribeFocus = navigation.addListener('focus', () => {
-      if (webViewRef.current && hasLoadedOnce && (url.includes('cart') || url.includes('my-account'))) {
+      if (webViewRef.current && hasLoadedOnce && (url.includes('cart') || url.includes('mi-cuenta'))) {
         webViewRef.current.reload();
       }
     });
@@ -199,7 +199,7 @@ function WebViewScreen({ route }) {
           const input = document.createElement('input');
           input.type = 'hidden';
           input.name = 'redirect_to';
-          input.value = 'https://aeternum.com.co/my-account/';
+          input.value = 'https://aeternum.com.co/mi-cuenta/';
           form.appendChild(input);
         }
       }
@@ -254,14 +254,14 @@ function WebViewScreen({ route }) {
 
             // Si WordPress nos manda al panel de admin → Mi Cuenta
             if (s.url.includes('wp-admin') && !s.url.includes('admin-ajax.php')) {
-              navigation.navigate('Mi Cuenta', { url: `${BASE_URL}my-account/` });
+              navigation.navigate('Mi Cuenta', { url: `${BASE_URL}mi-cuenta/` });
               return;
             }
 
             // Si WordPress muestra su propia página de login/error → volver a Mi Cuenta
             // (ocurre cuando la contraseña es incorrecta o falta redirect_to)
             if (s.url.includes('wp-login.php') && !s.url.includes('loggedout') && !s.url.includes('action=logout')) {
-              navigation.navigate('Mi Cuenta', { url: `${BASE_URL}my-account/?login_error=1` });
+              navigation.navigate('Mi Cuenta', { url: `${BASE_URL}mi-cuenta/?login_error=1` });
             }
           }}
           injectedJavaScript={autoScrollScript}
@@ -319,7 +319,7 @@ function ScreenCarrito({ route })   {
   return <WebViewScreen route={{ params: { url } }} />; 
 }
 function ScreenCuenta({ route })    { 
-  const url = route?.params?.url ?? `${BASE_URL}my-account/`;
+  const url = route?.params?.url ?? `${BASE_URL}mi-cuenta/`;
   return <WebViewScreen route={{ params: { url } }} />; 
 }
 
@@ -387,7 +387,7 @@ function HeaderSearchBar() {
             </TouchableOpacity>
             <TouchableOpacity 
               style={styles.iconButton}
-              onPress={() => navigation.navigate('Mi Cuenta', { url: `${BASE_URL}my-account/` })}
+              onPress={() => navigation.navigate('Mi Cuenta', { url: `${BASE_URL}mi-cuenta/` })}
             >
               <View style={styles.dot} />
               <Ionicons name="notifications-outline" size={22} color="#000000" />
@@ -535,7 +535,7 @@ function MainTabs() {
               component={ScreenCuenta} 
               listeners={({ navigation }) => ({
                 tabPress: (e) => {
-                  navigation.navigate('Mi Cuenta', { url: `${BASE_URL}my-account/` });
+                  navigation.navigate('Mi Cuenta', { url: `${BASE_URL}mi-cuenta/` });
                 },
               })}
             />
