@@ -44,7 +44,7 @@ function CustomDrawerContent(props) {
 
   const handleCategoryPress = (slug) => {
     props.navigation.closeDrawer();
-    navigation.navigate('Inicio', { url: `${BASE_URL}${slug}` });
+    navigation.navigate('Main', { screen: 'Inicio', params: { url: `${BASE_URL}${slug}` } });
   };
 
   const menuItems = [
@@ -89,7 +89,7 @@ function CustomDrawerContent(props) {
           style={styles.drawerItem}
           onPress={() => {
             props.navigation.closeDrawer();
-            navigation.navigate('Mi Cuenta', { url: `${BASE_URL}my-account/` });
+            navigation.navigate('Main', { screen: 'Mi Cuenta', params: { url: `${BASE_URL}my-account/` } });
           }}
         >
           <Ionicons name="person-outline" size={20} color="#000000" style={{ width: 30 }} />
@@ -100,7 +100,7 @@ function CustomDrawerContent(props) {
           style={styles.drawerItem}
           onPress={() => {
             props.navigation.closeDrawer();
-            navigation.navigate('Inicio', { url: `${BASE_URL}my-account/customer-logout/` });
+            navigation.navigate('Main', { screen: 'Inicio', params: { url: `${BASE_URL}my-account/customer-logout/` } });
           }}
         >
           <Ionicons name="log-out-outline" size={20} color="#FF3B30" style={{ width: 30 }} />
@@ -250,20 +250,19 @@ function WebViewScreen({ route }) {
             
             // Después de cerrar sesión → inicio
             if (s.url.includes('wp-login.php?loggedout=true')) {
-              navigation.navigate('Inicio', { url: BASE_URL });
+              navigation.navigate('Main', { screen: 'Inicio', params: { url: BASE_URL } });
               return;
             }
 
             // Si WordPress nos manda al panel de admin → Mi Cuenta
             if (s.url.includes('wp-admin') && !s.url.includes('admin-ajax.php')) {
-              navigation.navigate('Mi Cuenta', { url: `${BASE_URL}my-account/` });
+              navigation.navigate('Main', { screen: 'Mi Cuenta', params: { url: `${BASE_URL}my-account/` } });
               return;
             }
 
             // Si WordPress muestra su propia página de login/error → volver a Mi Cuenta
-            // (ocurre cuando la contraseña es incorrecta o falta redirect_to)
             if (s.url.includes('wp-login.php') && !s.url.includes('loggedout') && !s.url.includes('action=logout')) {
-              navigation.navigate('Mi Cuenta', { url: `${BASE_URL}my-account/?login_error=1` });
+              navigation.navigate('Main', { screen: 'Mi Cuenta', params: { url: `${BASE_URL}my-account/?login_error=1` } });
             }
           }}
           injectedJavaScript={autoScrollScript}
@@ -344,7 +343,7 @@ function HeaderSearchBar() {
   const handleSearch = () => {
     if (searchQuery.trim().length > 0) {
       const searchUrl = `${BASE_URL}?s=${encodeURIComponent(searchQuery)}`;
-      navigation.navigate('Inicio', { url: searchUrl });
+      navigation.navigate('Main', { screen: 'Inicio', params: { url: searchUrl } });
       setSearchQuery('');
     }
   };
@@ -352,7 +351,7 @@ function HeaderSearchBar() {
   const handleCategoryPress = (index, slug) => {
     setSelectedCat(index);
     const categoryUrl = `${BASE_URL}${slug}`;
-    navigation.navigate('Inicio', { url: categoryUrl });
+    navigation.navigate('Main', { screen: 'Inicio', params: { url: categoryUrl } });
   };
 
   return (
@@ -383,13 +382,13 @@ function HeaderSearchBar() {
           <View style={styles.headerIcons}>
             <TouchableOpacity 
               style={styles.iconButton}
-              onPress={() => navigation.navigate('Inicio', { url: `${BASE_URL}wishlist/` })}
+              onPress={() => navigation.navigate('Main', { screen: 'Inicio', params: { url: `${BASE_URL}wishlist/` } })}
             >
               <Ionicons name="heart-outline" size={22} color="#000000" />
             </TouchableOpacity>
             <TouchableOpacity 
               style={styles.iconButton}
-              onPress={() => navigation.navigate('Mi Cuenta', { url: `${BASE_URL}my-account/` })}
+              onPress={() => navigation.navigate('Main', { screen: 'Mi Cuenta', params: { url: `${BASE_URL}my-account/` } })}
             >
               <View style={styles.dot} />
               <Ionicons name="notifications-outline" size={22} color="#000000" />
@@ -508,7 +507,7 @@ function MainTabs() {
               listeners={({ navigation }) => ({
                 tabPress: (e) => {
                   // Al pulsar Inicio, forzamos que vuelva a la URL base
-                  navigation.navigate('Inicio', { url: BASE_URL });
+                  navigation.navigate('Main', { screen: 'Inicio', params: { url: BASE_URL } });
                 },
               })}
             />
@@ -528,7 +527,7 @@ function MainTabs() {
               component={ScreenCarrito} 
               listeners={({ navigation }) => ({
                 tabPress: (e) => {
-                  navigation.navigate('Carrito', { url: `${BASE_URL}cart/` });
+                  navigation.navigate('Main', { screen: 'Carrito', params: { url: `${BASE_URL}cart/` } });
                 },
               })}
             />
@@ -537,7 +536,7 @@ function MainTabs() {
               component={ScreenCuenta} 
               listeners={({ navigation }) => ({
                 tabPress: (e) => {
-                  navigation.navigate('Mi Cuenta', { url: `${BASE_URL}my-account/` });
+                  navigation.navigate('Main', { screen: 'Mi Cuenta', params: { url: `${BASE_URL}my-account/` } });
                 },
               })}
             />
