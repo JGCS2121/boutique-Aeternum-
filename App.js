@@ -266,7 +266,7 @@ function WebViewScreen({ route }) {
               navigation.navigate('Mi Cuenta', { url: `${BASE_URL}my-account/?login_error=1` });
             }
           }}
-          injectedJavaScriptBeforeContentLoaded={autoScrollScript}
+          injectedJavaScript={autoScrollScript}
           javaScriptEnabled={true}
           domStorageEnabled={true}
           sharedCookiesEnabled={true}
